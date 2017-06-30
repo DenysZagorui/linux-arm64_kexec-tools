@@ -69,7 +69,10 @@ static uint64_t get_kernel_page_offset(void)
 	if (i <= 0)
 		return UINT64_MAX;
 	else
-		return UINT64_MAX << i;
+                if (kernel_version() < KERNEL_VERSION(4, 6, 0))
+			return UINT64_MAX << (i + 1);
+		else
+			return UINT64_MAX << i;
 }
 
 /*
